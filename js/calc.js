@@ -11,13 +11,9 @@ let UIController = (() => {
 
   return {
     getInputData: () => {
-
-      let numPizzas = document.getElementById('num-pizzas').value;
-      let sizePizza = document.getElementById('size-pizza').value;
-
       return {
-        numPizzas: numPizzas,
-        sizePizza: sizePizza
+        numPizzas: document.getElementById('num-pizzas').value,
+        sizePizza: document.getElementById('size-pizza').value
       }
     }
   }
