@@ -20,7 +20,7 @@ let calcController = (() => {
         flour: Math.floor(percentage.flour * weight),
         water: Math.floor(percentage.water * weight),
         salt: Math.floor(percentage.salt * weight),
-        yeast: percentage.yeast * weight,
+        yeast: (percentage.yeast * weight).toFixed(2),
         numPizzas: num,
         size: size
       }
@@ -38,6 +38,28 @@ let UIController = (() => {
         numPizzas: document.getElementById('num-pizzas').value,
         sizePizza: document.getElementById('size-pizza').value
       }
+    },
+    updateFields: (ingObj) => {
+      // convert weight
+      let size;
+      switch (ingObj.size) {
+        case '200':
+          size = 'small';
+          break;
+        case '250':
+          size = 'medium';
+          break;
+        default:
+          size = 'large';
+          break;
+      }
+      // Update fields
+      document.getElementById('numPiz').textContent = ingObj.numPizzas;
+      document.getElementById('size').textContent = size;
+      document.getElementById('flour').textContent = ingObj.flour;
+      document.getElementById('water').textContent = ingObj.water;
+      document.getElementById('salt').textContent = ingObj.salt;
+      document.getElementById('yeast').textContent = ingObj.yeast;
     }
   }
 
@@ -53,9 +75,10 @@ let appController = ((calcCtrl, UICtrl) => {
   let clickEvent = () => {
     // Destructure returned object
     const { numPizzas, sizePizza } = UICtrl.getInputData();
+    // Get calculated values
     const ingredients = calcCtrl.calculate(numPizzas, sizePizza);
-
-    console.log(ingredients);
+    // Update UI
+    UICtrl.updateFields(ingredients);
   }
 
   // add an init function
@@ -69,11 +92,6 @@ let appController = ((calcCtrl, UICtrl) => {
       });
     }
   }
-
-
-  // 3: Calculate ingredient amounts
-
-  // 4: Update UI
 
 })(calcController, UIController);
 
