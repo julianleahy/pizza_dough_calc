@@ -14,6 +14,19 @@ let calcController = (() => {
     calculate: (num, size) => {
       let weight = num * size;
 
+      // convert weight back for UI string
+      switch (size) {
+        case '200':
+          size = 'small';
+          break;
+        case '250':
+          size = 'medium';
+          break;
+        default:
+          size = 'large';
+          break;
+      }
+
       // Return calculated ingredients based on weight
       // Round up all ingredients except yeast as irrelavant
       return {
@@ -40,26 +53,14 @@ let UIController = (() => {
       }
     },
     updateFields: (ingObj) => {
-      // convert weight
-      let size;
-      switch (ingObj.size) {
-        case '200':
-          size = 'small';
-          break;
-        case '250':
-          size = 'medium';
-          break;
-        default:
-          size = 'large';
-          break;
-      }
-      // Update fields
 
+      // Update fields
       // add or remove plural depending if 1 or more
       ingObj.numPizzas == 1 ? document.getElementById('pizza').textContent = 'pizza' : document.getElementById('pizza').textContent = 'pizzas'
-
+      // Heading
       document.getElementById('numPiz').textContent = ingObj.numPizzas;
-      document.getElementById('size').textContent = size;
+      document.getElementById('size').textContent = ingObj.size;
+      // Ingredients
       document.getElementById('flour').textContent = ingObj.flour;
       document.getElementById('water').textContent = ingObj.water;
       document.getElementById('salt').textContent = ingObj.salt;
@@ -79,9 +80,9 @@ let appController = ((calcCtrl, UICtrl) => {
   let clickEvent = () => {
     // Destructure returned object
     const { numPizzas, sizePizza } = UICtrl.getInputData();
-    // Get calculated values
+    // 3: Get calculated values
     const ingredients = calcCtrl.calculate(numPizzas, sizePizza);
-    // Update UI
+    // 4: Update UI
     UICtrl.updateFields(ingredients);
   }
 
