@@ -54,6 +54,10 @@ let UIController = (() => {
           break;
       }
       // Update fields
+
+      // add or remove plural depending if 1 or more
+      ingObj.numPizzas == 1 ? document.getElementById('pizza').textContent = 'pizza' : document.getElementById('pizza').textContent = 'pizzas'
+
       document.getElementById('numPiz').textContent = ingObj.numPizzas;
       document.getElementById('size').textContent = size;
       document.getElementById('flour').textContent = ingObj.flour;
