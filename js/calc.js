@@ -9,7 +9,18 @@ let calcController = (() => {
 // UI CONTROLLER
 let UIController = (() => {
 
-  // UI Stuff
+  return {
+    getInputData: () => {
+
+      let numPizzas = document.getElementById('num-pizzas').value;
+      let sizePizza = document.getElementById('size-pizza').value;
+
+      return {
+        numPizzas: numPizzas,
+        sizePizza: sizePizza
+      }
+    }
+  }
 
 
 
@@ -19,7 +30,8 @@ let UIController = (() => {
 let appController = ((calcCtrl, UICtrl) => {
 
   let clickEvent = () => {
-    console.log('OK');
+    let { numPizzas, sizePizza } = UICtrl.getInputData();
+    console.log(`${numPizzas} ${sizePizza} pizza`);
   }
 
   // 1. Listen for click event on pizza btn
