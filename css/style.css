@@ -12,7 +12,7 @@ body {
   height: 300px;
 }
 
-h1.header__main--title{
+h1.header__main--title {
   font-family: 'Cinzel Decorative', cursive;
   color: white;
   position: relative;
@@ -26,6 +26,7 @@ h1.header__main--title{
 
 .inputfield__search {
   background-color: aquamarine;
+  transition: background-color 0.5s ease;
 }
 
 .inputfield__search:hover {
