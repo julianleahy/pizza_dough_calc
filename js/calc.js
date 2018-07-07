@@ -1,4 +1,3 @@
-
 // CALCULATE AMOUNTS CONTROLLER
 let calcController = (() => {
 
@@ -44,42 +43,62 @@ let calcController = (() => {
 
 // UI CONTROLLER
 let UIController = (() => {
+  // Assign DOM strings to an object to allow scalability
+  let DOMStrings = {
+    numberOfPizzas: 'num-pizzas',
+    pizzaSize: 'size-pizza',
+    pizzaText: 'pizza',
+    headingNumPizza: 'numPiz',
+    headingSizePizza: 'size',
+    flour: 'flour',
+    water: 'water',
+    salt: 'salt',
+    yeast: 'yeast',
+    calcBtn: 'calculate'
+  }
 
   return {
     getInputData: () => {
       return {
-        numPizzas: document.getElementById('num-pizzas').value,
-        sizePizza: document.getElementById('size-pizza').value
+        numPizzas: document.getElementById(DOMStrings.numberOfPizzas).value,
+        sizePizza: document.getElementById(DOMStrings.pizzaSize).value
       }
     },
     updateFields: (ingObj) => {
 
       // Update fields
       // add or remove plural depending if 1 or more
-      ingObj.numPizzas == 1 ? document.getElementById('pizza').textContent = 'pizza' : document.getElementById('pizza').textContent = 'pizzas'
+      ingObj.numPizzas == 1 ? document.getElementById(DOMStrings.pizzaText).textContent = 'pizza' : document.getElementById(DOMStrings.pizzaText).textContent = 'pizzas'
       // Heading
-      document.getElementById('numPiz').textContent = ingObj.numPizzas;
-      document.getElementById('size').textContent = ingObj.size;
+      document.getElementById(DOMStrings.headingNumPizza).textContent = ingObj.numPizzas;
+      document.getElementById(DOMStrings.headingSizePizza).textContent = ingObj.size;
       // Ingredients
-      document.getElementById('flour').textContent = ingObj.flour;
-      document.getElementById('water').textContent = ingObj.water;
-      document.getElementById('salt').textContent = ingObj.salt;
-      document.getElementById('yeast').textContent = ingObj.yeast;
+      document.getElementById(DOMStrings.flour).textContent = ingObj.flour;
+      document.getElementById(DOMStrings.water).textContent = ingObj.water;
+      document.getElementById(DOMStrings.salt).textContent = ingObj.salt;
+      document.getElementById(DOMStrings.yeast).textContent = ingObj.yeast;
+    },
+    // Allow public access to DOM strings
+    domStrings: () => {
+      return DOMStrings
     }
   }
-
-
 
 })();
 
 // GLOBAL APP CONTROLLER
 let appController = ((calcCtrl, UICtrl) => {
 
+  let DOMStrings = UICtrl.domStrings();
+
 
   // 2: Get field input data
   let clickEvent = () => {
     // Destructure returned object
-    const { numPizzas, sizePizza } = UICtrl.getInputData();
+    const {
+      numPizzas,
+      sizePizza
+    } = UICtrl.getInputData();
     // 3: Get calculated values
     const ingredients = calcCtrl.calculate(numPizzas, sizePizza);
     // 4: Update UI
@@ -90,7 +109,7 @@ let appController = ((calcCtrl, UICtrl) => {
   return {
     init: () => {
       // 1. Listen for click event on pizza btn
-      document.getElementById('calculate').addEventListener('click', clickEvent)
+      document.getElementById(DOMStrings.calcBtn).addEventListener('click', clickEvent)
       // 1b. Handle return / enter
       document.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') clickEvent();
@@ -101,4 +120,3 @@ let appController = ((calcCtrl, UICtrl) => {
 })(calcController, UIController);
 
 appController.init();
-
